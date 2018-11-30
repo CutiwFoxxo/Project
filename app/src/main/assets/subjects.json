@@ -4,7 +4,11 @@
     "name": "Математика"
   },
   {
+    "file": "physics_list.json",
+    "name": "Физика"
+  },
+  {
     "file": "philosophy_list.json",
     "name": "Философия"
-  },
+  }
 ]

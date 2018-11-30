@@ -1,0 +1,10 @@
+[
+  {
+    "file": "physics/mech.json",
+    "name": "Классическая механика и макроскопические системы"
+  },
+  {
+    "file": "physics/optics.json",
+    "name": "Оптика"
+  }
+]

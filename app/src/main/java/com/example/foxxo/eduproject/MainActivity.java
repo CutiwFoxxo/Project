@@ -43,7 +43,7 @@ public class MainActivity extends Activity {
             btn = new Button(this);
             btn.setText(subject_names_list.get(i));
             btn.setTag(i);
-            llMain.addView(btn);
+            internalLayout.addView(btn);
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
