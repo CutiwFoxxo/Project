@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.*;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -46,9 +47,7 @@ public class MainActivity extends Activity {
         llMain = (LinearLayout) findViewById(R.id.llMain);
 
         ArrayList<String> questions = new ArrayList<String>();
-        questions.add("123");
         try {
-            MainActivity.this.setTitle(loadJSONFromAsset());
             JSONObject obj = new JSONObject(loadJSONFromAsset());
             JSONArray m_jArry = obj.getJSONArray("test");
 
@@ -65,6 +64,7 @@ public class MainActivity extends Activity {
 
         int i;
         TextView textView;
+        RadioGroup  radioGroup;
         int wrapContent = LinearLayout.LayoutParams.WRAP_CONTENT;
         LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(
                 wrapContent, wrapContent);
@@ -74,6 +74,7 @@ public class MainActivity extends Activity {
             textView.setTag("" + i);// setting tag with index i
             textView.setText(questions.get(i));
             llMain.addView(textView, lParams);
+            //RadioGroup  radioGroup = new RadioGroup(this);
         }
     }
 }
