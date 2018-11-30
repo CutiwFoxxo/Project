@@ -14,39 +14,37 @@ import android.util.Log;
 import android.widget.*;
 import android.view.*;
 
-import javax.security.auth.Subject;
 
+public class SubjectActivity extends Activity {
 
-public class MainActivity extends Activity {
-
-    LinearLayout llMain;
+    LinearLayout llSubject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_subject);
 
-        llMain = (LinearLayout) findViewById(R.id.llMain);
+        llSubject = (LinearLayout) findViewById(R.id.llSubject);
 
-
-        String json_subjects = ConfigReader.loadJSONFromAsset(getBaseContext(),"subjects.json");
-        final ArrayList<String> subjects_list = ConfigReader.getTestsList(json_subjects);
-        final ArrayList<String> subject_names_list = ConfigReader.getTestNamesList(json_subjects);
+        String filename = getIntent().getStringExtra("file");
+        String json_tests = ConfigReader.loadJSONFromAsset(getBaseContext(),filename);
+        final ArrayList<String> tests_list = ConfigReader.getTestsList(json_tests);
+        final ArrayList<String> tests_name_list = ConfigReader.getTestNamesList(json_tests);
 
         Button btn;
-        for (int i = 0; i < subjects_list.size(); i++) {
+        for (int i = 0; i < tests_list.size(); i++) {
             btn = new Button(this);
-            btn.setText(subject_names_list.get(i));
+            btn.setText(tests_name_list.get(i));
             btn.setTag(i);
-            llMain.addView(btn);
+            llSubject.addView(btn);
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity.this, SubjectActivity.class);
+                    Intent intent = new Intent(SubjectActivity.this, TestActivity.class);
                     int index = Integer.parseInt(v.getTag().toString());
-                    intent.putExtra("file", subjects_list.get(index));
-                    intent.putExtra("name", subject_names_list.get(index));
+                    intent.putExtra("file", tests_list.get(index));
+                    intent.putExtra("name", tests_name_list.get(index));
                     startActivity(intent);
                 }
             });

@@ -1,14 +1,14 @@
 [
   {
-    "file": "square.json",
+    "file": "math/square.json",
     "name": "Квадратные уравнения"
   },
   {
-    "file": "sqaure.json",
+    "file": "math/sqaure.json",
     "name": "Квадратные уравнения2"
   },
   {
-    "file": "sqaure.json",
+    "file": "math/sqaure.json",
     "name": "Квадратные уравнения3"
   }
 ]
