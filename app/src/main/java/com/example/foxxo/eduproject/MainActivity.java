@@ -50,8 +50,7 @@ public class MainActivity extends Activity {
         ArrayList<Integer> answers = new ArrayList<Integer>();
         ArrayList<ArrayList<String>> options = new ArrayList<ArrayList<String>>();
         try {
-            JSONObject obj = new JSONObject(loadJSONFromAsset());
-            JSONArray m_jArry = obj.getJSONArray("test");
+            JSONArray m_jArry = new JSONArray(loadJSONFromAsset());
 
             for (int i = 0; i < m_jArry.length(); i++) {
                 JSONObject jo_inside = m_jArry.getJSONObject(i);
@@ -61,7 +60,7 @@ public class MainActivity extends Activity {
                 questions.add(question);
                 answers.add(answer);
 
-                JSONArray jOpts = obj.getJSONArray("opts");
+                JSONArray jOpts = jo_inside.getJSONArray("opts");
                 ArrayList<String> opts = new ArrayList<String>();
                 for (int j = 0; j < jOpts.length(); j++) {
                     JSONObject jo_inside2 = jOpts.getJSONObject(i);
@@ -86,6 +85,14 @@ public class MainActivity extends Activity {
             textView.setText(questions.get(i));
             llMain.addView(textView, lParams);
             radioGroup = new RadioGroup(this);
+            RadioButton button;
+            ArrayList<String> opts1 = options.get(i);
+            for(int j = 0; j < opts1.size(); j++) {
+                button = new RadioButton(this);
+                button.setText(opts1.get(j));
+                radioGroup.addView(button);
+            }
+            llMain.addView(radioGroup);
         }
     }
 }
