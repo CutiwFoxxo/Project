@@ -10,17 +10,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.*;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
-import android.view.Gravity;
+import android.view.*;
 
 
 public class MainActivity extends Activity {
 
     LinearLayout llMain;
+
+    Button btnCheck;
 
     public String loadJSONFromAsset() {
         String json = null;
@@ -60,11 +58,11 @@ public class MainActivity extends Activity {
                 questions.add(question);
                 answers.add(answer);
 
-                JSONArray jOpts = jo_inside.getJSONArray("opts");
+                JSONArray jOpts = jo_inside.getJSONArray("options");
                 ArrayList<String> opts = new ArrayList<String>();
                 for (int j = 0; j < jOpts.length(); j++) {
-                    JSONObject jo_inside2 = jOpts.getJSONObject(i);
-                    opts.add(jo_inside2.toString());
+                    String jo_inside2 = jOpts.getString(j);
+                    opts.add(jo_inside2);
                 }
                 options.add(opts);
             }
@@ -94,5 +92,17 @@ public class MainActivity extends Activity {
             }
             llMain.addView(radioGroup);
         }
+
+        btnCheck = new Button(this);
+        btnCheck.setText("Проверить");
+        llMain.addView(btnCheck);
+
+        btnCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("ADROMARYN", "EEE!");
+            }
+        });
     }
+
 }
