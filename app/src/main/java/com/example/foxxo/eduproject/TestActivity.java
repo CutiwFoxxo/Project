@@ -40,26 +40,31 @@ public class TestActivity extends Activity {
         answers   = ConfigReader.getAnswersList(json_test);
         options   = ConfigReader.getOptionsList(json_test);
 
-        TextView textView;
-        RadioGroup  radioGroup;
+        LinearLayout item;
         int wrapContent = LinearLayout.LayoutParams.WRAP_CONTENT;
         LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(
                 wrapContent, wrapContent);
         lParams.gravity = Gravity.LEFT;
         for (int i = 0; i < questions.size(); i++) {
-            textView = new TextView(this);
-            textView.setTag("" + i);// setting tag with index i
-            textView.setText(questions.get(i));
-            llTest.addView(textView, lParams);
-            radioGroup = new RadioGroup(this);
+            item = new LinearLayout(this);
+            item.setBackgroundColor(Integer.parseInt("00E0E0", 16));
+            item.setOrientation(LinearLayout.VERTICAL);
+            TextView textView = new TextView(this);
+            textView.setTag(i);
+            textView.setText((i+1) +  ") " + questions.get(i));
+            item.addView(textView, lParams);
+
+            RadioGroup radioGroup = new RadioGroup(this);
             RadioButton button;
-            ArrayList<String> opts1 = options.get(i);
-            for(int j = 0; j < opts1.size(); j++) {
+            ArrayList<String> opts = options.get(i);
+            for(int j = 0; j < opts.size(); j++) {
                 button = new RadioButton(this);
-                button.setText(opts1.get(j));
+                button.setText(opts.get(j));
                 radioGroup.addView(button);
             }
-            llTest.addView(radioGroup);
+            item.addView(radioGroup, lParams);
+
+            llTest.addView(item);
         }
 
         btnCheck = new Button(this);
