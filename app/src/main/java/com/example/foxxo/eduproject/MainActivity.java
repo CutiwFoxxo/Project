@@ -11,11 +11,15 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import android.view.Gravity;
 
 
 public class MainActivity extends Activity {
+
+    LinearLayout llMain;
 
     public String loadJSONFromAsset() {
         String json = null;
@@ -36,11 +40,13 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
-        LinearLayout llMain = (LinearLayout) findViewById(R.id.llMain);
+        llMain = (LinearLayout) findViewById(R.id.llMain);
 
-        ArrayList<String> questions = new ArrayList<String>();;
+        ArrayList<String> questions = new ArrayList<String>();
+        ;
         try {
             JSONObject obj = new JSONObject(loadJSONFromAsset());
             JSONArray m_jArry = obj.getJSONArray("formules");
@@ -58,21 +64,15 @@ public class MainActivity extends Activity {
 
         int i;
         TextView textView;
-        for( i = 0; i < questions.toArray().length; i++) {
+        int wrapContent = LinearLayout.LayoutParams.WRAP_CONTENT;
+        LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(
+                wrapContent, wrapContent);
+        lParams.gravity = Gravity.LEFT;
+        for (i = 0; i< 10; i++ ) { //i < questions.toArray().length; i++) {
             textView = new TextView(this);
-            textView.setTag(""+i);// setting tag with index i
-            llMain.addView(textView);
-        }
-        int len=llMain.getChildCount();
-        int j = 0;
-        int requiredPosition = 5;
-        while(j<len) {
-            TextView tempTextView =((TextView)llMain.getChildAt(i));
-            if( tempTextView.getTag().equals(""+requiredPosition)){
-                //Perform required operation
-                tempTextView.setText(questions.get(j));
-            }
-            j++;
+            textView.setTag("" + i);// setting tag with index i
+            textView.setText("qwe");
+            llMain.addView(textView, lParams);
         }
     }
 }
