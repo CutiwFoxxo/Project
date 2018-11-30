@@ -47,6 +47,8 @@ public class MainActivity extends Activity {
         llMain = (LinearLayout) findViewById(R.id.llMain);
 
         ArrayList<String> questions = new ArrayList<String>();
+        ArrayList<int> answers = new ArrayList<int>();
+        ArrayList<ArrayList<String>> options = new ArrayList<ArrayList<String>>();
         try {
             JSONObject obj = new JSONObject(loadJSONFromAsset());
             JSONArray m_jArry = obj.getJSONArray("test");
@@ -54,9 +56,18 @@ public class MainActivity extends Activity {
             for (int i = 0; i < m_jArry.length(); i++) {
                 JSONObject jo_inside = m_jArry.getJSONObject(i);
                 String question = jo_inside.getString("question");
-                //String answer = jo_inside.getString("answer");
+                int answer = jo_inside.getInt("answer");
 
                 questions.add(question);
+                answers.add(answer);
+
+                JSONArray jOpts = obj.getJSONArray("opts");
+                ArrayList<String> opts = new ArrayList<String>();
+                for (int j = 0; j < jOpts.length(); j++) {
+                    JSONObject jo_inside2 = jOpts.getJSONObject(i);
+                    opts.add(jo_inside2.toString());
+                }
+                options.add(opts);
             }
         } catch (JSONException e) {
             e.printStackTrace();
