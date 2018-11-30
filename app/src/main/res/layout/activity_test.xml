@@ -4,6 +4,6 @@
     android:layout_height="wrap_content"
     android:measureWithLargestChild="false"
     android:orientation="vertical"
-    android:id="@+id/llMain"
-    tools:context=".MainActivity" >
+    android:id="@+id/llTest"
+    tools:context=".TestActivity" >
 </LinearLayout>
