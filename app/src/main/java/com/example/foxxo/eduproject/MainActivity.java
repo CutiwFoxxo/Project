@@ -47,7 +47,7 @@ public class MainActivity extends Activity {
         llMain = (LinearLayout) findViewById(R.id.llMain);
 
         ArrayList<String> questions = new ArrayList<String>();
-        ArrayList<int> answers = new ArrayList<int>();
+        ArrayList<Integer> answers = new ArrayList<Integer>();
         ArrayList<ArrayList<String>> options = new ArrayList<ArrayList<String>>();
         try {
             JSONObject obj = new JSONObject(loadJSONFromAsset());
@@ -85,7 +85,7 @@ public class MainActivity extends Activity {
             textView.setTag("" + i);// setting tag with index i
             textView.setText(questions.get(i));
             llMain.addView(textView, lParams);
-            //RadioGroup  radioGroup = new RadioGroup(this);
+            radioGroup = new RadioGroup(this);
         }
     }
 }
