@@ -20,7 +20,8 @@ import android.view.*;
 public class TestActivity extends Activity {
 
     LinearLayout llTest;
-
+    ScrollView scrollView;
+    LinearLayout internalLayout;
     Button btnCheck;
     TextView infoText;
 
@@ -38,6 +39,10 @@ public class TestActivity extends Activity {
         setContentView(R.layout.activity_test);
 
         llTest = (LinearLayout) findViewById(R.id.llTest);
+
+        scrollView = new ScrollView(this);
+        internalLayout = new LinearLayout(this);
+        internalLayout.setOrientation(LinearLayout.VERTICAL);
 
         String filename = getIntent().getStringExtra("file");
         String json_test = ConfigReader.loadJSONFromAsset(getBaseContext(),filename);
@@ -68,17 +73,20 @@ public class TestActivity extends Activity {
             }
             item.addView(radioGroup, lParams);
 
-            llTest.addView(item);
+            internalLayout.addView(item);
         }
 
         infoText = new TextView(this);
         infoText.setText("");
         infoText.setVisibility(View.INVISIBLE);
-        llTest.addView(infoText);
+        internalLayout.addView(infoText);
 
         btnCheck = new Button(this);
         btnCheck.setText("Проверить");
-        llTest.addView(btnCheck);
+        internalLayout.addView(btnCheck);
+
+        scrollView.addView(internalLayout);
+        llTest.addView(scrollView);
 
         btnCheck.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +94,7 @@ public class TestActivity extends Activity {
                 ArrayList<Integer> wrongAnswers = new ArrayList<Integer>();
                 int count = answers.size();
                 for (int i = 0; i < count; i++) {
-                    LinearLayout item = (LinearLayout)llTest.getChildAt(i);
+                    LinearLayout item = (LinearLayout)internalLayout.getChildAt(i);
                     RadioGroup group = (RadioGroup)item.getChildAt(1);
                     int id = group.getCheckedRadioButtonId();
                     View radioButton = group.findViewById(id);

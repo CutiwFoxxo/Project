@@ -18,6 +18,8 @@ import android.view.*;
 public class SubjectActivity extends Activity {
 
     LinearLayout llSubject;
+    ScrollView scrollView;
+    LinearLayout internalLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,9 @@ public class SubjectActivity extends Activity {
         setContentView(R.layout.activity_subject);
 
         llSubject = (LinearLayout) findViewById(R.id.llSubject);
+        scrollView = new ScrollView(this);
+        internalLayout = new LinearLayout(this);
+        internalLayout.setOrientation(LinearLayout.VERTICAL);
 
         String filename = getIntent().getStringExtra("file");
         String json_tests = ConfigReader.loadJSONFromAsset(getBaseContext(),filename);
@@ -37,7 +42,7 @@ public class SubjectActivity extends Activity {
             btn = new Button(this);
             btn.setText(tests_name_list.get(i));
             btn.setTag(i);
-            llSubject.addView(btn);
+            internalLayout.addView(btn);
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -49,6 +54,9 @@ public class SubjectActivity extends Activity {
                 }
             });
         }
+
+        scrollView.addView(internalLayout);
+        llSubject.addView(scrollView);
     }
 
 }

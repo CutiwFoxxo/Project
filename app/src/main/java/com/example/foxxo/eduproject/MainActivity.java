@@ -20,6 +20,8 @@ import javax.security.auth.Subject;
 public class MainActivity extends Activity {
 
     LinearLayout llMain;
+    ScrollView scrollView;
+    LinearLayout internalLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +30,9 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         llMain = (LinearLayout) findViewById(R.id.llMain);
-
+        scrollView = new ScrollView(this);
+        internalLayout = new LinearLayout(this);
+        internalLayout.setOrientation(LinearLayout.VERTICAL);
 
         String json_subjects = ConfigReader.loadJSONFromAsset(getBaseContext(),"subjects.json");
         final ArrayList<String> subjects_list = ConfigReader.getTestsList(json_subjects);
@@ -51,6 +55,9 @@ public class MainActivity extends Activity {
                 }
             });
         }
+
+        scrollView.addView(internalLayout);
+        llMain.addView(scrollView);
     }
 
 }
