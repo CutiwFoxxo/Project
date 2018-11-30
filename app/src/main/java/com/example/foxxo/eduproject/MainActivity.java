@@ -46,10 +46,11 @@ public class MainActivity extends Activity {
         llMain = (LinearLayout) findViewById(R.id.llMain);
 
         ArrayList<String> questions = new ArrayList<String>();
-        ;
+        questions.add("123");
         try {
+            MainActivity.this.setTitle(loadJSONFromAsset());
             JSONObject obj = new JSONObject(loadJSONFromAsset());
-            JSONArray m_jArry = obj.getJSONArray("formules");
+            JSONArray m_jArry = obj.getJSONArray("test");
 
             for (int i = 0; i < m_jArry.length(); i++) {
                 JSONObject jo_inside = m_jArry.getJSONObject(i);
@@ -68,10 +69,10 @@ public class MainActivity extends Activity {
         LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(
                 wrapContent, wrapContent);
         lParams.gravity = Gravity.LEFT;
-        for (i = 0; i< 10; i++ ) { //i < questions.toArray().length; i++) {
+        for (i = 0; i < questions.toArray().length; i++) {
             textView = new TextView(this);
             textView.setTag("" + i);// setting tag with index i
-            textView.setText("qwe");
+            textView.setText(questions.get(i));
             llMain.addView(textView, lParams);
         }
     }
