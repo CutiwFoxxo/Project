@@ -2,6 +2,7 @@ package com.example.foxxo.eduproject;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ConfigReader {
 
@@ -55,6 +57,33 @@ public class ConfigReader {
         }
         return tests;
     }
+
+    public static ArrayList<Boolean> getTestHasLessonList(String json) {
+        ArrayList<Boolean> tests = new ArrayList<Boolean>();
+        try {
+            JSONArray m_jArry = new JSONArray(json);
+            for (int i = 0; i < m_jArry.length(); i++) {
+                tests.add(m_jArry.getJSONObject(i).getBoolean("is_lesson"));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return tests;
+    }
+
+    public static HashMap<String, String> getLesson(String json) {
+        HashMap<String, String> lesson = new HashMap<String, String>();
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            lesson.put("test", jsonObject.getString("test"));
+            lesson.put("lesson", jsonObject.getString("lesson"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return lesson;
+    }
+
+
 
     public static ArrayList<String> getQuestionsList(String json) {
         ArrayList<String> questions = new ArrayList<String>();

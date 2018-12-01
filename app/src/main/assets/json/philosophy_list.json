@@ -1,0 +1,27 @@
+[
+  {
+    "file": "json/philosophy/terms.json",
+    "name": "Базовые термины философии",
+    "is_lesson": false
+  },
+  {
+    "file": "json/philosophy/antique.json",
+    "name": "Античная философия",
+    "is_lesson": false
+  },
+  {
+    "file": "json/philosophy/eastern.json",
+    "name": "Восточная философия",
+    "is_lesson": false
+  },
+  {
+    "file": "json/philosophy/western.json",
+    "name": "Философия эпохи просвещения и нашего времени",
+    "is_lesson": false
+  },
+  {
+    "file": "json/philosophy/political.json",
+    "name": "Политическая философия",
+    "is_lesson": false
+  }
+]

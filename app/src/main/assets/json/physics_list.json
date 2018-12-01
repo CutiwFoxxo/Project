@@ -1,0 +1,12 @@
+[
+  {
+    "file": "json/physics/mech.json",
+    "name": "Классическая механика и макроскопические системы",
+    "is_lesson": false
+  },
+  {
+    "file": "json/physics/optics_lesson.json",
+    "name": "Оптика",
+    "is_lesson": true
+  }
+]

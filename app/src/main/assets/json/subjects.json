@@ -1,14 +1,14 @@
 [
   {
-    "file": "math_list.json",
+    "file": "json/math_list.json",
     "name": "Математика"
   },
   {
-    "file": "physics_list.json",
+    "file": "json/physics_list.json",
     "name": "Физика"
   },
   {
-    "file": "philosophy_list.json",
+    "file": "json/philosophy_list.json",
     "name": "Философия"
   }
 ]

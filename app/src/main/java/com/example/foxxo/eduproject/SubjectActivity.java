@@ -36,6 +36,7 @@ public class SubjectActivity extends Activity {
         String json_tests = ConfigReader.loadJSONFromAsset(getBaseContext(),filename);
         final ArrayList<String> tests_list = ConfigReader.getTestsList(json_tests);
         final ArrayList<String> tests_name_list = ConfigReader.getTestNamesList(json_tests);
+        final ArrayList<Boolean> has_lesson_list = ConfigReader.getTestHasLessonList(json_tests);
 
         Button btn;
         for (int i = 0; i < tests_list.size(); i++) {
@@ -46,8 +47,13 @@ public class SubjectActivity extends Activity {
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(SubjectActivity.this, TestActivity.class);
+                    Intent intent;
                     int index = Integer.parseInt(v.getTag().toString());
+                    if (has_lesson_list.get(index)) {
+                        intent = new Intent(SubjectActivity.this, LessonActivity.class);
+                    } else {
+                        intent = new Intent(SubjectActivity.this, TestActivity.class);
+                    }
                     intent.putExtra("file", tests_list.get(index));
                     intent.putExtra("name", tests_name_list.get(index));
                     startActivity(intent);

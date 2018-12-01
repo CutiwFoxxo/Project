@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
         internalLayout = new LinearLayout(this);
         internalLayout.setOrientation(LinearLayout.VERTICAL);
 
-        String json_subjects = ConfigReader.loadJSONFromAsset(getBaseContext(),"subjects.json");
+        String json_subjects = ConfigReader.loadJSONFromAsset(getBaseContext(),"json/subjects.json");
         final ArrayList<String> subjects_list = ConfigReader.getTestsList(json_subjects);
         final ArrayList<String> subject_names_list = ConfigReader.getTestNamesList(json_subjects);
 
