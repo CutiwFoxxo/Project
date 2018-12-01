@@ -4,24 +4,27 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONArray;
-
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
-import android.widget.*;
-import android.view.*;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 
-public class TestActivity extends Activity {
+public class QuizActivity extends Activity {
 
-    static LinearLayout llTest;
+    final static int COUNT_OF_TESTS = 5;
+
+    static LinearLayout llQuiz;
     static ScrollView scrollView;
     static LinearLayout internalLayout;
     static TextView header;
@@ -30,31 +33,53 @@ public class TestActivity extends Activity {
 
     final static int firstItemIbdex = 1;
 
-    ArrayList<String> questions = new ArrayList<String>();
-    ArrayList<Integer> answers = new ArrayList<Integer>();
-    ArrayList<ArrayList<String>> options = new ArrayList<ArrayList<String>>();
+    static ArrayList<String> questions = new ArrayList<String>();
+    static ArrayList<Integer> answers = new ArrayList<Integer>();
+    static ArrayList<ArrayList<String>> options = new ArrayList<ArrayList<String>>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_test);
+        setContentView(R.layout.activity_quiz);
 
-        llTest = (LinearLayout) findViewById(R.id.llTest);
+        llQuiz = (LinearLayout) findViewById(R.id.llQuiz);
 
         scrollView = new ScrollView(this);
         internalLayout = new LinearLayout(this);
         internalLayout.setOrientation(LinearLayout.VERTICAL);
 
         String filename = getIntent().getStringExtra("file");
-        String json_test = ConfigReader.loadJSONFromAsset(getBaseContext(),filename);
-        String name = getIntent().getStringExtra("name");
-        questions = ConfigReader.getQuestionsList(json_test);
-        answers   = ConfigReader.getAnswersList(json_test);
-        options   = ConfigReader.getOptionsList(json_test);
+        String json_tests = ConfigReader.loadJSONFromAsset(getBaseContext(),filename);
+        final ArrayList<String> tests_list = ConfigReader.getTestsList(json_tests);
+        final ArrayList<Boolean> has_lesson_list = ConfigReader.getTestHasLessonList(json_tests);
+
+        ArrayList<Integer> indexes = new ArrayList<Integer>();
+        int counter = 0;
+        for (int i = 0; i < tests_list.size(); i++) {
+            String json_tests2 = ConfigReader.loadJSONFromAsset(getBaseContext(),tests_list.get(i));
+            if (has_lesson_list.get(i)) {
+                final HashMap<String,String> metaData = ConfigReader.getLesson(json_tests2);
+                String testFileName = metaData.get("test");
+                json_tests2 = ConfigReader.loadJSONFromAsset(getBaseContext(),testFileName);
+            }
+            ArrayList<String> questionsOne = ConfigReader.getQuestionsList(json_tests2);
+            ArrayList<Integer> answersOne = ConfigReader.getAnswersList(json_tests2);
+            ArrayList<ArrayList<String>> optionsOne = ConfigReader.getOptionsList(json_tests2);
+            for (int j = 0; j < questionsOne.size(); j++) {
+                questions.add(j, questionsOne.get(j));
+                answers.add(j, answersOne.get(j));
+                options.add(j, optionsOne.get(j));
+                indexes.add(counter++);
+            }
+        }
+
+        Collections.shuffle(indexes);
+
+        final ArrayList<Integer> selectedIndexes = new ArrayList<Integer>(indexes.size() > COUNT_OF_TESTS ? indexes.subList(0,COUNT_OF_TESTS) : indexes);
 
         header = new TextView(this);
-        header.setText(name);
+        header.setText(getIntent().getStringExtra("name"));
         header.setTextColor(0xff006400);
         header.setTypeface(header.getTypeface(), Typeface.BOLD_ITALIC);
         header.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
@@ -65,17 +90,18 @@ public class TestActivity extends Activity {
         LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(
                 wrapContent, wrapContent);
         lParams.gravity = Gravity.LEFT;
-        for (int i = 0; i < questions.size(); i++) {
+        for (int i = 0; i < selectedIndexes.size(); i++) {
+            int index = selectedIndexes.get(i);
             item = new LinearLayout(this);
             item.setOrientation(LinearLayout.VERTICAL);
             TextView textView = new TextView(this);
-            textView.setTag(i);
-            textView.setText((i+1) +  ") " + questions.get(i));
+            textView.setTag(index);
+            textView.setText((i+1) +  ") " + questions.get(index));
             item.addView(textView, lParams);
 
             RadioGroup radioGroup = new RadioGroup(this);
             RadioButton button;
-            ArrayList<String> opts = options.get(i);
+            ArrayList<String> opts = options.get(index);
             for(int j = 0; j < opts.size(); j++) {
                 button = new RadioButton(this);
                 button.setText(opts.get(j));
@@ -98,20 +124,20 @@ public class TestActivity extends Activity {
         internalLayout.addView(btnCheck);
 
         scrollView.addView(internalLayout);
-        llTest.addView(scrollView);
+        llQuiz.addView(scrollView);
 
         btnCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ArrayList<Integer> wrongAnswers = new ArrayList<Integer>();
-                int count = answers.size();
+                int count = selectedIndexes.size();
                 for (int i = 0; i < count; i++) {
                     LinearLayout item = (LinearLayout)internalLayout.getChildAt(i+firstItemIbdex);
                     RadioGroup group = (RadioGroup)item.getChildAt(1);
                     int id = group.getCheckedRadioButtonId();
                     View radioButton = group.findViewById(id);
                     int idx = group.indexOfChild(radioButton);
-                    if (idx != answers.get(i)) {
+                    if (idx != answers.get(selectedIndexes.get(i))) {
                         wrongAnswers.add(i+1);
                     }
                 }

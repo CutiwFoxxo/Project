@@ -33,16 +33,21 @@ public class SubjectActivity extends Activity {
         internalLayout = new LinearLayout(this);
         internalLayout.setOrientation(LinearLayout.VERTICAL);
 
-        String filename = getIntent().getStringExtra("file");
+        final String filename = getIntent().getStringExtra("file");
+        final String subject = getIntent().getStringExtra("name");
         String json_tests = ConfigReader.loadJSONFromAsset(getBaseContext(),filename);
         final ArrayList<String> tests_list = ConfigReader.getTestsList(json_tests);
         final ArrayList<String> tests_name_list = ConfigReader.getTestNamesList(json_tests);
         final ArrayList<Boolean> has_lesson_list = ConfigReader.getTestHasLessonList(json_tests);
 
         Button btn;
-        for (int i = 0; i < tests_list.size(); i++) {
+        for (int i = 0; i < tests_list.size() + 1; i++) {
             btn = new Button(this);
-            btn.setText(tests_name_list.get(i));
+            if (i == tests_list.size()) {
+                btn.setText(subject + ": тест по всем темам");
+            } else {
+                btn.setText(tests_name_list.get(i));
+            }
             btn.setTag(i);
             btn.setBackgroundColor(0xff006400);
             btn.setTextColor(Color.WHITE);
@@ -52,13 +57,19 @@ public class SubjectActivity extends Activity {
                 public void onClick(View v) {
                     Intent intent;
                     int index = Integer.parseInt(v.getTag().toString());
-                    if (has_lesson_list.get(index)) {
+                    if (index == tests_list.size()) {
+                        intent = new Intent(SubjectActivity.this, QuizActivity.class);
+                        intent.putExtra("file", filename);
+                        intent.putExtra("name", subject + ": тест по всем темам");
+                    } else if (has_lesson_list.get(index)) {
                         intent = new Intent(SubjectActivity.this, LessonActivity.class);
+                        intent.putExtra("file", tests_list.get(index));
+                        intent.putExtra("name", tests_name_list.get(index));
                     } else {
                         intent = new Intent(SubjectActivity.this, TestActivity.class);
+                        intent.putExtra("file", tests_list.get(index));
+                        intent.putExtra("name", tests_name_list.get(index));
                     }
-                    intent.putExtra("file", tests_list.get(index));
-                    intent.putExtra("name", tests_name_list.get(index));
                     startActivity(intent);
                 }
             });
