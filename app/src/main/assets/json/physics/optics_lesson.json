@@ -1,4 +1,4 @@
 {
-  "test": "json/physics/optics.json",
+  "test":   "json/physics/optics.json",
   "lesson": "html/physics/optics.html"
 }

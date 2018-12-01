@@ -1,0 +1,13 @@
+[
+
+  {
+    "file": "json/geo/nature.json",
+    "name": "Природа и климат",
+    "is_lesson": false
+  },
+  {
+    "file": "json/geo/social.json",
+    "name": "Социальная, экономическая, политическая география",
+    "is_lesson": false
+  }
+]

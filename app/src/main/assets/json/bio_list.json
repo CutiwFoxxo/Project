@@ -1,0 +1,13 @@
+[
+
+  {
+    "file": "json/bio/micro.json",
+    "name": "Микробиология",
+    "is_lesson": false
+  },
+  {
+    "file": "json/bio/human.json",
+    "name": "Анатомия и физиология человека",
+    "is_lesson": false
+  }
+]

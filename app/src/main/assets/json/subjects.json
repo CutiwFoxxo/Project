@@ -8,6 +8,14 @@
     "name": "Физика"
   },
   {
+    "file": "json/bio_list.json",
+    "name": "Биология"
+  },
+  {
+    "file": "json/geo_list.json",
+    "name": "География"
+  },
+  {
     "file": "json/philosophy_list.json",
     "name": "Философия"
   }

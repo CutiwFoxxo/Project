@@ -1,7 +1,12 @@
 [
   {
-    "file": "json/math/square.json",
+    "file": "json/math/square_lesson.json",
     "name": "Квадратные уравнения",
+    "is_lesson": true
+  },
+  {
+    "file": "json/math/exp.json",
+    "name": "Степени и корни",
     "is_lesson": false
   }
 ]

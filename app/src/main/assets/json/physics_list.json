@@ -1,8 +1,8 @@
 [
   {
-    "file": "json/physics/mech.json",
+    "file": "json/physics/mech_lesson.json",
     "name": "Классическая механика и макроскопические системы",
-    "is_lesson": false
+    "is_lesson": true
   },
   {
     "file": "json/physics/optics_lesson.json",
