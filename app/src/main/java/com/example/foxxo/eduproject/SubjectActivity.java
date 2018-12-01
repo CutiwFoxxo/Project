@@ -2,6 +2,7 @@ package com.example.foxxo.eduproject;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,6 +44,8 @@ public class SubjectActivity extends Activity {
             btn = new Button(this);
             btn.setText(tests_name_list.get(i));
             btn.setTag(i);
+            btn.setBackgroundColor(0xff006400);
+            btn.setTextColor(Color.WHITE);
             internalLayout.addView(btn);
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override

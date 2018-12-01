@@ -2,6 +2,7 @@ package com.example.foxxo.eduproject;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,20 +14,21 @@ import org.json.JSONArray;
 
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.TypedValue;
 import android.widget.*;
 import android.view.*;
 
 
 public class TestActivity extends Activity {
 
-    LinearLayout llTest;
-    ScrollView scrollView;
-    LinearLayout internalLayout;
-    Button btnCheck;
-    TextView infoText;
+    static LinearLayout llTest;
+    static ScrollView scrollView;
+    static LinearLayout internalLayout;
+    static TextView header;
+    static Button btnCheck;
+    static TextView infoText;
 
-
-    ArrayList<String> answerSelects = new ArrayList<String>();
+    final static int firstItemIbdex = 1;
 
     ArrayList<String> questions = new ArrayList<String>();
     ArrayList<Integer> answers = new ArrayList<Integer>();
@@ -46,9 +48,17 @@ public class TestActivity extends Activity {
 
         String filename = getIntent().getStringExtra("file");
         String json_test = ConfigReader.loadJSONFromAsset(getBaseContext(),filename);
+        String name = getIntent().getStringExtra("name");
         questions = ConfigReader.getQuestionsList(json_test);
         answers   = ConfigReader.getAnswersList(json_test);
         options   = ConfigReader.getOptionsList(json_test);
+
+        header = new TextView(this);
+        header.setText(name);
+        header.setTextColor(0xff006400);
+        header.setTypeface(header.getTypeface(), Typeface.BOLD_ITALIC);
+        header.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+        internalLayout.addView(header);
 
         LinearLayout item;
         int wrapContent = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -83,6 +93,8 @@ public class TestActivity extends Activity {
 
         btnCheck = new Button(this);
         btnCheck.setText("Проверить");
+        btnCheck.setBackgroundColor(0xff006400);
+        btnCheck.setTextColor(Color.WHITE);
         internalLayout.addView(btnCheck);
 
         scrollView.addView(internalLayout);
@@ -94,7 +106,7 @@ public class TestActivity extends Activity {
                 ArrayList<Integer> wrongAnswers = new ArrayList<Integer>();
                 int count = answers.size();
                 for (int i = 0; i < count; i++) {
-                    LinearLayout item = (LinearLayout)internalLayout.getChildAt(i);
+                    LinearLayout item = (LinearLayout)internalLayout.getChildAt(i+firstItemIbdex);
                     RadioGroup group = (RadioGroup)item.getChildAt(1);
                     int id = group.getCheckedRadioButtonId();
                     View radioButton = group.findViewById(id);
